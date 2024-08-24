@@ -9,14 +9,8 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
-// const authMiddleware = require('./middleware/authMiddleware');
 const authMiddleware = require('./middlewares/authMiddleware');
-app.post('/api/upload', authMiddleware, (req, res) => {
-    // File upload logic here
-});
-
-const uploadRoutes = require('./routes/upload');
-app.use('/api/upload', authMiddleware, uploadRoutes);
+app.use('/api/upload', authMiddleware, require('./routes/upload'));
 
 app.get('/', (req, res) => {
     res.send('Server is running!');
@@ -25,4 +19,3 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
-
