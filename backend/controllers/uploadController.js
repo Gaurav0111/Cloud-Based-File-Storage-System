@@ -1,6 +1,18 @@
+const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { uploadFileToDropbox } = require('../dropboxService');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); 
+    }
+});
+
+const upload = multer({ storage: storage });
 
 const uploadFile = async (req, res) => {
     if (!req.file) {
@@ -8,21 +20,19 @@ const uploadFile = async (req, res) => {
     }
 
     try {
-        const filePath = path.basename(req.file.path);
-        const fileContent = fs.readFileSync(req.file.path);
+        const filePath = path.join(__dirname, '../uploads', req.file.filename);
+        const fileContent = fs.readFileSync(filePath);
 
-        const dropboxResponse = await uploadFileToDropbox(filePath, fileContent);
+        const response = await uploadFileToDropbox(req.file.originalname, fileContent);
 
-        fs.unlinkSync(req.file.path);
+        fs.unlinkSync(filePath);
 
-        res.status(200).json({
-            message: 'File uploaded successfully',
-            dropboxResponse: dropboxResponse
-        });
+        res.status(200).json({ message: 'File uploaded successfully to Dropbox', response });
     } catch (error) {
         console.error('Error uploading file to Dropbox:', error);
-        res.status(500).json({ error: 'Error uploading file to Dropbox' });
+        res.status(500).json({ error: 'Failed to upload file to Dropbox' });
     }
 };
 
-module.exports = { uploadFile };
+
+module.exports = { upload, uploadFile };
