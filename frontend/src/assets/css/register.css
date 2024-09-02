@@ -10,12 +10,12 @@ body {
 
 .register-container {
     width: 100%;
-    max-width: 450px;  /* Reduced the max-width slightly */
+    max-width: 450px;  
 }
 
 .register-card {
     background: white;
-    padding: 30px;  /* Reduced padding to minimize height */
+    padding: 30px; 
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
@@ -23,14 +23,14 @@ body {
 h2 {
     text-align: center;
     color: #555;
-    margin-bottom: 20px;  /* Reduced margin-bottom */
-    font-size: 22px;  /* Slightly smaller font size */
+    margin-bottom: 20px;  
+    font-size: 22px;  
 }
 
 .input-row {
     display: flex;
-    gap: 15px;  /* Reduced gap between the two input fields */
-    margin-bottom: 15px;  /* Reduced margin-bottom */
+    gap: 15px;  
+    margin-bottom: 15px; 
 }
 
 .input-group {
@@ -39,41 +39,41 @@ h2 {
 
 label {
     display: block;
-    margin-bottom: 5px;  /* Reduced margin-bottom for labels */
+    margin-bottom: 5px; 
     font-weight: 500;
     color: #555;
 }
 
 input, select {
     width: 100%;
-    padding: 10px;  /* Reduced padding */
+    padding: 10px;  
     border-radius: 5px;
     border: 1px solid #ddd;
-    font-size: 14px;  /* Slightly smaller font size */
+    font-size: 14px; 
     box-sizing: border-box;
 }
 
 .gender-options {
     display: flex;
     align-items: center;
-    gap: 15px;  /* Reduced gap between radio buttons */
-    margin-bottom: 15px;  /* Reduced margin-bottom */
+    gap: 15px; 
+    margin-bottom: 15px; 
     width: fit-content;
 }
 
 .gender-options label {
-    margin-bottom: 0;  /* Remove margin for gender labels */
-    font-weight: normal;  /* Normal font weight for radio labels */
+    margin-bottom: 0;  
+    font-weight: normal;
 }
 
 .gender-options input[type="radio"] {
-    margin-right: 5px;  /* Space between radio button and label */
+    margin-right: 5px; 
 }
 
 .register-button {
     background: #4a90e2;
     color: white;
-    padding: 10px 20px;  /* Reduced padding for smaller button */
+    padding: 10px 20px;  
     border-radius: 25px;
     border: none;
     font-size: 16px;
