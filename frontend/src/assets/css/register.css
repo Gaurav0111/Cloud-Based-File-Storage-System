@@ -58,6 +58,7 @@ input, select {
     align-items: center;
     gap: 15px;  /* Reduced gap between radio buttons */
     margin-bottom: 15px;  /* Reduced margin-bottom */
+    width: fit-content;
 }
 
 .gender-options label {
