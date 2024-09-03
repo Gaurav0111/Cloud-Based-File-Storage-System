@@ -1,12 +1,14 @@
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./users.db');
+const mongoose = require('mongoose');
 
-db.serialize(() => {
-    db.run(`CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
-    )`);
+const UserSchema = new mongoose.Schema({
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    dob: { type: Date, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    phone: { type: String, required: true },
+    gender: { type: String, enum: ['Male', 'Female'], required: true },
+    createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = db;
+module.exports = mongoose.model('User', UserSchema);
