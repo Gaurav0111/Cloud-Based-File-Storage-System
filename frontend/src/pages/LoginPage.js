@@ -12,7 +12,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/login', formData);
+            const response = await axios.post('/api/auth/login', formData);
             console.log('Login successful:', response.data);
         } catch (error) {
             console.error('Login failed:', error.response.data);
