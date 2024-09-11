@@ -1,54 +1,35 @@
-// import React from 'react';
-// import '../assets/css/login.css'; // Import the CSS file
-
-
-// const LoginPage = () => {
-//     return (
-//         <div className="login-container">
-//             <div className="login-box">
-//                 <h2>Login</h2>
-//                 <form>
-//                     <div className="input-container">
-//                         <i className="fa fa-user icon"></i>
-//                         <input type="text" placeholder="User name / Email" required />
-//                     </div>
-//                     <div className="input-container">
-//                         <i className="fa fa-lock icon"></i>
-//                         <input type="password" placeholder="Password" required />
-//                     </div>
-//                     <button type="submit" className="login-button">LOG IN NOW</button>
-//                 </form>
-//                 <div className="social-login">
-//                     <p>log in via</p>
-//                     <div className="social-icons">
-//                         <i className="fa fa-instagram"></i>
-//                         <i className="fa fa-facebook"></i>
-//                         <i className="fa fa-twitter"></i>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default LoginPage;
-
-
-import React from 'react';
+import React, { useState } from 'react';
+import axios from '../api/axios';  // Axios instance
 import '../assets/css/login.css';
 
 function Login() {
+    const [formData, setFormData] = useState({ email: '', password: '' });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/api/auth/login', formData);
+            console.log('Login successful:', response.data);
+        } catch (error) {
+            console.error('Login failed:', error.response.data);
+        }
+    };
+
     return (
         <div className="login-container">
             <div className="login-card">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="email">Username / Email</label>
-                        <input type="text" id="email" placeholder="User name / Email" />
+                        <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="User name / Email" />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" placeholder="Password" />
+                        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
                     </div>
                     <button type="submit" className="login-button">LOG IN NOW</button>
                 </form>
