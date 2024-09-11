@@ -16,6 +16,7 @@ router.post('/register', [
     check('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
     check('confirmPassword', 'Confirm Password must be at least 6 characters').isLength({ min: 6 })
 ], async (req, res) => {
+    console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -42,7 +43,8 @@ router.post('/register', [
 
         res.status(201).json({ msg: 'User registered successfully' });
     } catch (err) {
-        res.status(500).json({ errors: [{ msg: 'Server error' }] });
+        console.error(err);  // Log the actual error for debugging
+        res.status(500).json({ errors: [{ msg: 'Server error', error: err.message }] });
     }
 });
 
