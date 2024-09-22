@@ -16,13 +16,13 @@ const Register = () => {
     });
 
     const [errors, setErrors] = useState({});
-    const [serverError, setServerError] = useState(''); // To handle server-side errors
+    const [serverError, setServerError] = useState(''); 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
-        setServerError(''); // Clear server error when user changes input
+        setServerError(''); 
     };
 
     const validateForm = () => {
@@ -46,13 +46,12 @@ const Register = () => {
         e.preventDefault();
 
         if (!validateForm()) {
-            return; // Stop form submission if validation fails
+            return;
         }
 
         try {
             const response = await axios.post('/api/auth/register', formData);
 
-            // Reset form after successful registration
             setFormData({
                 firstName: '',
                 lastName: '',
@@ -64,11 +63,9 @@ const Register = () => {
                 gender: ''
             });
 
-            // Show success message and redirect to login
             alert('User registered successfully!');
-            navigate('/login'); // Redirect to login page
+            navigate('/login'); 
         } catch (error) {
-            // Handle server error (e.g., email already registered)
             if (error.response && error.response.status === 409) {
                 setServerError('Email already registered.');
             } else {
