@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) return res.status(403).json({ error: 'Failed to authenticate token' });
 
-        req.userId = decoded.id;
+        req.user = { id: decoded.id, email: decoded.email };  // Attach user info to request
         next();
     });
 };

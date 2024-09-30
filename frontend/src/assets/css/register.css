@@ -84,3 +84,8 @@ input, select {
 .register-button:hover {
     background: #3a78c2;
 }
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
