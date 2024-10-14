@@ -11,7 +11,6 @@ const registerUser = (req, res) => {
 
         const hashedPassword = bcrypt.hashSync(password, 10);
 
-
         db.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
             if (err) return res.status(500).json({ error: 'Database error' });
             return res.status(201).json({ message: 'User registered successfully' });
@@ -29,7 +28,12 @@ const loginUser = (req, res) => {
         const isMatch = bcrypt.compareSync(password, user.password);
         if (!isMatch) return res.status(400).json({ error: 'Invalid username or password' });
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(
+            { user: { id: user.id, email: user.email } }, // Include the email in the JWT payload
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
         return res.status(200).json({ message: 'Login successful', token });
     });
 };

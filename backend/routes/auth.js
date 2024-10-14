@@ -35,7 +35,7 @@ router.post('/register', [
         }
 
         user = new User({ firstName, lastName, dob, email, password, phone, gender });
-
+        
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from '../api/axios';  
+import axios from '../api/axios';
 import '../assets/css/register.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,13 +16,13 @@ const Register = () => {
     });
 
     const [errors, setErrors] = useState({});
-    const [serverError, setServerError] = useState(''); 
+    const [serverError, setServerError] = useState('');
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
-        setServerError(''); 
+        setServerError('');
     };
 
     const validateForm = () => {
@@ -64,7 +64,7 @@ const Register = () => {
             });
 
             alert('User registered successfully!');
-            navigate('/login'); 
+            navigate('/login');
         } catch (error) {
             if (error.response && error.response.status === 409) {
                 setServerError('Email already registered.');
@@ -84,62 +84,62 @@ const Register = () => {
                     <div className="input-row">
                         <div className="input-group">
                             <label htmlFor="firstName">First Name</label>
-                            <input 
-                                type="text" 
-                                id="firstName" 
-                                name="firstName" 
-                                value={formData.firstName} 
-                                onChange={handleChange} 
-                                placeholder="First Name" 
+                            <input
+                                type="text"
+                                id="firstName"
+                                name="firstName"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                                placeholder="First Name"
                             />
                             {errors.firstName && <p className="error">{errors.firstName}</p>}
                         </div>
                         <div className="input-group">
                             <label htmlFor="lastName">Last Name</label>
-                            <input 
-                                type="text" 
-                                id="lastName" 
-                                name="lastName" 
-                                value={formData.lastName} 
-                                onChange={handleChange} 
-                                placeholder="Last Name" 
+                            <input
+                                type="text"
+                                id="lastName"
+                                name="lastName"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                                placeholder="Last Name"
                             />
                             {errors.lastName && <p className="error">{errors.lastName}</p>}
                         </div>
                     </div>
                     <div className="input-group">
                         <label htmlFor="dob">Birthday</label>
-                        <input 
-                            type="date" 
-                            id="dob" 
-                            name="dob" 
-                            value={formData.dob} 
-                            onChange={handleChange} 
+                        <input
+                            type="date"
+                            id="dob"
+                            name="dob"
+                            value={formData.dob}
+                            onChange={handleChange}
                         />
                         {errors.dob && <p className="error">{errors.dob}</p>}
                     </div>
                     <div className="input-row">
                         <div className="input-group">
                             <label htmlFor="email">Email</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                value={formData.email} 
-                                onChange={handleChange} 
-                                placeholder="Email" 
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="Email"
                             />
                             {errors.email && <p className="error">{errors.email}</p>}
                         </div>
                         <div className="input-group">
                             <label htmlFor="phone">Phone Number</label>
-                            <input 
-                                type="text" 
-                                id="phone" 
-                                name="phone" 
-                                value={formData.phone} 
-                                onChange={handleChange} 
-                                placeholder="Phone Number" 
+                            <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="Phone Number"
                             />
                             {errors.phone && <p className="error">{errors.phone}</p>}
                         </div>
@@ -147,25 +147,25 @@ const Register = () => {
                     <div className="input-row">
                         <div className="input-group">
                             <label htmlFor="password">Password</label>
-                            <input 
-                                type="password" 
-                                id="password" 
-                                name="password" 
-                                value={formData.password} 
-                                onChange={handleChange} 
-                                placeholder="Password" 
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                placeholder="Password"
                             />
                             {errors.password && <p className="error">{errors.password}</p>}
                         </div>
                         <div className="input-group">
                             <label htmlFor="confirmPassword">Confirm Password</label>
-                            <input 
-                                type="password" 
-                                id="confirmPassword" 
-                                name="confirmPassword" 
-                                value={formData.confirmPassword} 
-                                onChange={handleChange} 
-                                placeholder="Confirm Password" 
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                placeholder="Confirm Password"
                             />
                             {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
                         </div>
@@ -173,28 +173,32 @@ const Register = () => {
                     <div className="input-group">
                         <label>Gender</label>
                         <div className="gender-options">
-                            <input 
-                                type="radio" 
-                                id="male" 
-                                name="gender" 
-                                value="Male" 
-                                checked={formData.gender === 'Male'} 
-                                onChange={handleChange} 
+                            <input
+                                type="radio"
+                                id="male"
+                                name="gender"
+                                value="Male"
+                                checked={formData.gender === 'Male'}
+                                onChange={handleChange}
                             />
                             <label htmlFor="male">Male</label>
-                            <input 
-                                type="radio" 
-                                id="female" 
-                                name="gender" 
-                                value="Female" 
-                                checked={formData.gender === 'Female'} 
-                                onChange={handleChange} 
+                            <input
+                                type="radio"
+                                id="female"
+                                name="gender"
+                                value="Female"
+                                checked={formData.gender === 'Female'}
+                                onChange={handleChange}
                             />
                             <label htmlFor="female">Female</label>
                         </div>
                         {errors.gender && <p className="error">{errors.gender}</p>}
                     </div>
                     <button type="submit" className="register-button">Submit</button>
+                    <div className="redirect-to-login">
+                        <p>Already registered? </p>
+                        {/* <Link to="">Login here</Link></p> */}
+                    </div>
                 </form>
             </div>
         </div>
