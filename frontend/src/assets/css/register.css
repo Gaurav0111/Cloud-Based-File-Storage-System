@@ -84,3 +84,12 @@ input, select {
 .register-button:hover {
     background: #3a78c2;
 }
+.redirect-link {
+    color: #4a90e2;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.redirect-link:hover {
+    color: #3a78c2;
+}

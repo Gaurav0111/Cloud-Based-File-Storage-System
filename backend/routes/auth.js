@@ -43,7 +43,7 @@ router.post('/register', [
 
         res.status(201).json({ msg: 'User registered successfully' });
     } catch (err) {
-        console.error(err);  // Log the actual error for debugging
+        console.error(err);
         res.status(500).json({ errors: [{ msg: 'Server error', error: err.message }] });
     }
 });
