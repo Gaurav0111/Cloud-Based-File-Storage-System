@@ -16,4 +16,14 @@ const uploadFileToDropbox = async (fileName, fileContent) => {
     }
 };
 
-module.exports = { uploadFileToDropbox };
+const createDropboxFolder = async (folderName) => {
+    try {
+        const response = await dbx.filesCreateFolderV2({ path: '/' + folderName });
+        return response.result;
+    } catch (error) {
+        console.error('Error creating Dropbox folder:', error);
+        throw error;
+    }
+};
+
+module.exports = { uploadFileToDropbox, createDropboxFolder };

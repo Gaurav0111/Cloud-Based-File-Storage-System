@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const { createDropboxFolder } = require('../dropboxService');
 
 const router = express.Router();
 
@@ -16,7 +17,6 @@ router.post('/register', [
     check('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
     check('confirmPassword', 'Confirm Password must be at least 6 characters').isLength({ min: 6 })
 ], async (req, res) => {
-    console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -35,15 +35,18 @@ router.post('/register', [
         }
 
         user = new User({ firstName, lastName, dob, email, password, phone, gender });
-
+        
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
 
         await user.save();
 
-        res.status(201).json({ msg: 'User registered successfully' });
+        // Create Dropbox folder for the user
+        await createDropboxFolder(email); // Pass email as folder name
+
+        res.status(201).json({ msg: 'User registered and Dropbox folder created successfully' });
     } catch (err) {
-        console.error(err);  // Log the actual error for debugging
+        console.error(err); // Log the actual error for debugging
         res.status(500).json({ errors: [{ msg: 'Server error', error: err.message }] });
     }
 });
@@ -72,7 +75,6 @@ router.post('/login', [
             return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
         }
 
-        // Generate JWT token (this step requires adding JWT setup)
         const payload = {
             user: {
                 id: user.id
