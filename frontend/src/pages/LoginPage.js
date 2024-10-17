@@ -1,49 +1,67 @@
 import React, { useState } from 'react';
-import axios from '../api/axios';  // Axios instance
+import { useNavigate } from 'react-router-dom';
+import axios from '../api/axios';
 import '../assets/css/login.css';
 
-function Login() {
+const Login = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: '', password: '' });
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/api/auth/login', formData);
-            console.log('Login successful:', response.data);
+            setSuccess('Login successful! Redirecting...');
+            setError('');
+            setTimeout(() => navigate('/landing'), 2000); // Redirect to LandingPage.js
         } catch (error) {
-            console.error('Login failed:', error.response.data);
+            setError(error.response?.data?.message || 'Invalid email or password');
+            setSuccess('');
         }
     };
 
     return (
         <div className="login-container">
             <div className="login-card">
+                <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label htmlFor="email">Username / Email</label>
-                        <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="User name / Email" />
+                        <label htmlFor="email">Email</label>
+                        <input 
+                            type="email" id="email" name="email" 
+                            value={formData.email} onChange={handleChange} required 
+                        />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
+                        <input 
+                            type="password" id="password" name="password" 
+                            value={formData.password} onChange={handleChange} required 
+                        />
                     </div>
-                    <button type="submit" className="login-button">LOG IN NOW</button>
+                    {error && <p className="error">{error}</p>}
+                    {success && <p className="success">{success}</p>}
+                    <button type="submit" className="login-button">Login</button>
                 </form>
-                <div className="social-login">
-                    <span>log in via</span>
-                    <div className="social-icons">
-                        <i className="fab fa-instagram"></i>
-                        <i className="fab fa-facebook"></i>
-                        <i className="fab fa-twitter"></i>
-                    </div>
-                </div>
+                <p>
+                    Don't have an account? 
+                    <span 
+                        className="redirect-link" 
+                        onClick={() => navigate('/register')}
+                    >
+                        Register here
+                    </span>
+                </p>
             </div>
         </div>
     );
-}
+};
 
 export default Login;
