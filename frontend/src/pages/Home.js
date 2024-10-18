@@ -17,19 +17,44 @@ function Home() {
     setFiles((prevFiles) => [...prevFiles, ...selectedFiles]); // Update files state
   };
 
-  // Function to handle file upload
-  const handleFileUpload = () => {
-    // Logic to upload files
-    console.log("Uploading files:", files);
-    // Perform the upload (e.g., API call)
+  // Function to handle file upload with Axios
+  const handleFileUpload = async () => {
+    if (files.length === 0) {
+      console.log("No files selected for upload");
+      return;
+    }
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file);
+    });
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("Upload successful:", response.data);
+      // Clear files after successful upload
+      setFiles([]);
+    } catch (error) {
+      console.error("Error uploading files:", error);
+    }
   };
 
-  // Function to create a new document
-  const handleCreateNewDoc = () => {
-    // Logic to create a new document
-    console.log("Creating new document");
-    // Create new document logic
+  // Function to create a new document via API
+  const handleCreateNewDoc = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/create-doc", {
+        documentName: "New Document",
+      });
+      console.log("Document created successfully:", response.data);
+    } catch (error) {
+      console.error("Error creating document:", error);
+    }
   };
+
 
   return (
     <div className="container">
